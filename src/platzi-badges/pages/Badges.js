@@ -1,0 +1,122 @@
+import React, {Component, Fragment} from 'react';
+import {Link} from 'react-router-dom';
+
+//components
+import BadgeList from '../components/BadgeList';
+
+//css
+import './styles/Badges.css';
+
+//files
+import confLogo from '../images/badge-header.svg';
+
+class Badges extends Component{
+
+    constructor(props) {
+        super(props);
+        console.clear();
+        console.log('1- constrcutor')
+        this.state = {
+            data : []
+        }
+    }
+    
+    componentDidMount() {
+        console.log('3- componentDidMount')
+
+        // para eliminar el timeout si se llega a quitar el componente
+        this.timeoutId = setTimeout(() => {
+            this.setState({
+                data : 
+                [
+                    {
+                      id: '2de30c42-9deb-40fc-a41f-05e62b5939a7',
+                      firstName: 'Freda',
+                      lastName: 'Grady',
+                      email: 'Leann_Berge@gmail.com',
+                      jobTitle: 'Legacy Brand Director',
+                      twitter: 'FredaGrady22221-7573',
+                      avatarUrl:
+                        'https://www.gravatar.com/avatar/f63a9c45aca0e7e7de0782a6b1dff40b?d=identicon',
+                    },
+                    {
+                      id: 'd00d3614-101a-44ca-b6c2-0be075aeed3d',
+                      firstName: 'Major',
+                      lastName: 'Rodriguez',
+                      email: 'Ilene66@hotmail.com',
+                      jobTitle: 'Human Research Architect',
+                      twitter: 'MajorRodriguez61545',
+                      avatarUrl:
+                        'https://www.gravatar.com/avatar/d57a8be8cb9219609905da25d5f3e50a?d=identicon',
+                    },
+                    {
+                      id: '63c03386-33a2-4512-9ac1-354ad7bec5e9',
+                      firstName: 'Daphney',
+                      lastName: 'Torphy',
+                      email: 'Ron61@hotmail.com',
+                      jobTitle: 'National Markets Officer',
+                      twitter: 'DaphneyTorphy96105',
+                      avatarUrl:
+                        'https://www.gravatar.com/avatar/e74e87d40e55b9ff9791c78892e55cb7?d=identicon',
+                    },
+                  ]
+            });
+        }, 3000);
+
+    }
+    /**
+     *  Se ejecuta cuando se actualiza el componente
+     * @param {*} prevProps Propiedades anteriores antes de la actualizacion
+     * @param {*} prevState Estado de Badges antes de la actualizacion
+     */
+    componentDidUpdate(prevProps, prevState) {
+        console.log('5- componentDidUpdate');
+        console.log({
+            anterior : {
+                prevProps, prevState
+            },
+            actual : {
+                props : this.props, state: this.state
+            }
+        })
+    }
+
+    // cuando el componente se elimina o salga de vista del DOM 
+    // ejemplo: cuando nos vamos de la pagina actual
+    componentWillUnmount() {
+        console.log('6- componentWillUnmount');
+
+        // si existe un proceso lo eliminamos
+        clearTimeout(this.timeoutId);
+    }
+
+    render() {
+        console.log('2/4- render')
+        return (
+            <Fragment>
+                <div className="Badges">
+                    <div className="Badges__hero">
+                        <div className="Badges__container">
+                            <img src={confLogo} alt="Logo" className="Badges_conf-logo"/>
+                        </div>
+                    </div>
+                </div>
+                <div className="Badges__container">
+                    <div className="Badges__buttons">
+                        <Link to="/badges/new" className="btn btn-primary">New Badge</Link>
+                    </div>
+
+                    <div className="Badges__list">
+                        <div className="Badges__container">
+                            {/*Le paso las variables desde el estado*/}
+                            <BadgeList badges={this.state.data} /> 
+                            
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+        );
+    }
+}
+
+export default Badges;
